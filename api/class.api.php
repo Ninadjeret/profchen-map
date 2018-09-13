@@ -78,6 +78,11 @@ class POGO_api {
                         return $this->isValidSourceCommunity($param);
                     }   
                 ),
+                'sourceChannel' => array(
+                    'validate_callback' => function($param, $request, $key) {
+                        return $this->isValidSourceChannel($param);
+                    }   
+                ),
                 'sourceUser' => array(),
             ),            
         ) ); 
@@ -226,6 +231,13 @@ class POGO_api {
         return false;
     }
     
+    function isValidSourceChannel( $channelId ) {
+        if( is_numeric( $channelId ) ) {
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * =========================================================================
      * RAID METHODS
@@ -302,6 +314,7 @@ class POGO_api {
                 ); 
                 $raid_source = array(
                     'community' => $params['sourceCommunity'],
+                    'channel'   => $params['sourceChannel'],
                     'type'      => $params['sourceType'],
                     'user'      => $params['sourceUser'],
                     'content'   => $params['url'],
@@ -325,6 +338,7 @@ class POGO_api {
             ); 
             $raid_source = array(
                 'community' => $params['sourceCommunity'],
+                'channel'   => $params['sourceChannel'],
                 'type'      => $params['sourceType'],
                 'user'      => $params['sourceUser'],
                 'content'   => $params['sourceContent'],
@@ -397,6 +411,7 @@ class POGO_api {
             'user'        => $source_user,
             'type'        => 'map',
             'community'   => false,
+            'channel'     => false,
             'content'     => ''
         );
         
@@ -594,7 +609,7 @@ class POGO_api {
             'publishDate'       => $news_obj->getPublishDate()->format('Y-m-d H:i:s'), 
             'contentCommunity'  => $news_obj->getContentForCommunity(),
             'contentMap'        => $news_obj->getContentForMap(),
-            'isImportant'           => $news_obj->isImportant(),
+            'isImportant'       => $news_obj->isImportant(),
         );
     }
     
@@ -610,7 +625,9 @@ class POGO_api {
                 'user'        => $raid->getLastAnnounce()->getAuthor(),
                 'type'        => $raid->getFirstAnnounce()->getType(),
                 'community'   => $this->prepareCommunityForExport( $raid->getFirstAnnounce()->getCommunity() ),
-                'content'     => ''                
+                'channel'     => $raid->getFirstAnnounce()->getChannelId(),  
+                'content'     => '',
+                'url'         => $raid->getFirstAnnounce()->getsourceUrl(),  
             );
         } 
         

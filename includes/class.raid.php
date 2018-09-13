@@ -203,6 +203,7 @@ class POGO_raid {
         $content = $args['content'];
         $type = $args['type'];
         $community = ( !empty($args['community']) ) ? POGO_community::initFromExternalId($args['community']) : false ;
+        $channelid = ( !empty($args['channel']) ) ? $args['channel'] : false ;
         $commentId = wp_insert_comment( array(
             'comment_post_ID' => $this->wpId,
             'comment_author' => $author,
@@ -214,6 +215,7 @@ class POGO_raid {
         
         update_field('sourceType', $type, 'comment_'.$commentId);
         if( $community ) update_field('sourceCommunity', $community->wpId, 'comment_'.$commentId);
+        if( $channelid ) update_field('sourceChannel', $channelid, 'comment_'.$commentId);
         
     }
     

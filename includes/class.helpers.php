@@ -591,6 +591,7 @@ public static function deleteAccents($string) {
             'user'        => 'Prof Chen',
             'type'        => 'auto',
             'community'   => false,
+            'channel'     => false,
             'content'     => 'Mise à jour automatique'
         );
     }
@@ -600,6 +601,7 @@ public static function deleteAccents($string) {
             'user'        => false,
             'type'        => 'map',
             'community'   => false,
+            'channel'     => false,
             'content'     => 'Annoncé depuis la map'
         );
     }
