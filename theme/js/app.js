@@ -696,8 +696,8 @@ function loadModalGymData( gym ) {
         $('.mdl-dialog__content ul').append('<li><a class="modal__action update-raid" href="#"><i class="material-icons">fingerprint</i><span>Préciser le Pokémon</span></li>');
     }
     $('.mdl-dialog__content ul').append('<li><a href="'+gym.GoogleMapsUrl+'"><i class="material-icons">navigation</i><span>Itinéraire vers l\'arène</span></li>');
-    if( gym.raid != false && now.isBefore(gym.raid.endTime) && gym.raid.source != false && gym.raid.source.community != false && gym.raid.source.community.url != false ) {
-        $('.mdl-dialog__content ul').append('<li><a href="'+gym.raid.source.community.url+'"><i class="material-icons">message</i><span>Rejoindre la conversation</span></li>');
+    if( gym.raid != false && now.isBefore(gym.raid.endTime) && gym.raid.source != false && gym.raid.source.url != false ) {
+        $('.mdl-dialog__content ul').append('<li><a href="'+gym.raid.source.url+'"><i class="material-icons">message</i><span>Rejoindre la conversation</span></li>');
     } 
 }
 

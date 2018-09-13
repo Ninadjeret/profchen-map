@@ -37,7 +37,7 @@ class POGO_community {
     public function getUrl( $channelId = false ) {
         if( !$channelId ) $channelId = $this->getDefaultRaidsCahnnelId();
         if( $this->getType() == 'discord' ) {
-            return 'https://discordapp.com/channels/'.$this->externalId.'/'.$this->getDefaultRaidsCahnnelId();
+            return 'https://discordapp.com/channels/'.$this->externalId.'/'.$channelId;
         }
         if( $this->getType() == 'messenger' ) {
             return 'http://www.facebook.com/messages/?action=read&tid='.$this->externalId;
