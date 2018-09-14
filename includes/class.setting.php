@@ -87,6 +87,7 @@ class POGO_settings {
         $role = ($user->getAdminCommunities()) ? 'communityAdmin' : 'user' ; 
         
         $settings = array(
+            'username'              => $user->getUsername(),
             'role'                  => $role,
             'mapHideEmpty'          => $mapHideEmpty,
             'mapDefaultPosition'    => $mapDefaultPosition,

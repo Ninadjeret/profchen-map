@@ -2,7 +2,7 @@
 /*
 All the functions are in the PHP files in the `functions/` folder.
 */
-define('PROFCHEN_VERSION', '1.2.0');
+define('PROFCHEN_VERSION', '1.3.0');
 setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 
 require get_template_directory() . '/config/config.php';

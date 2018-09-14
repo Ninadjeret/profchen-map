@@ -690,7 +690,7 @@ function loadModalGymData( gym ) {
     //Gestion des actions à afficher
     $('.mdl-dialog__content ul').html('');
     if( gym.raid == false || now.isAfter(gym.raid.endTime) ) {
-        $('.mdl-dialog__content ul').append('<li><a class="modal__action create-raid" href="#"><i class="material-icons">fingerprint</i><span>Annoncer un raid</span></li>');
+        $('.mdl-dialog__content ul').append('<li><a class="modal__action create-raid" href="#"><i class="material-icons">add_alert</i><span>Annoncer un raid</span></li>');
     }
     if( gym.raid != false && !now.isBefore(gym.raid.startTime) && now.isBefore(gym.raid.endTime) && typeof gym.raid.pokemon.nameFr == 'undefined' ) {
         $('.mdl-dialog__content ul').append('<li><a class="modal__action update-raid" href="#"><i class="material-icons">fingerprint</i><span>Préciser le Pokémon</span></li>');

@@ -663,7 +663,7 @@ class POGO_api {
             'raidDetection' => array(
                 'active'        => $community->detectRaids(),
                 'deleteMessage' => $community->deleteMessageAfterRaidDetection()
-            ),
+            ),            
         );
         
         $commands = array(

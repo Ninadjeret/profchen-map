@@ -63,7 +63,7 @@
             </div>
             
             <div class="footer-action">
-                <a class="bt modal__action cancel" href="">Anuler</a>
+                <a class="bt modal__action cancel" href="">Annuler</a>
             </div>
         </div>
         
