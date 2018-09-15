@@ -87,10 +87,14 @@ class POGO_settings {
         $role = ($user->getAdminCommunities()) ? 'communityAdmin' : 'user' ; 
         
         $settings = array(
-            'username'              => $user->getUsername(),
-            'role'                  => $role,
-            'mapHideEmpty'          => $mapHideEmpty,
-            'mapDefaultPosition'    => $mapDefaultPosition,
+
+            'user' => array(
+                'username' => $user->getUsername(),
+                'role' => $user->getRole(),  
+                'secretKey' => $user->getSecretKey(),
+            ),
+            'mapHideEmpty'  => $mapHideEmpty,
+            'mapDefaultPosition' => $mapDefaultPosition,
         );
         echo json_encode($settings);
         die();

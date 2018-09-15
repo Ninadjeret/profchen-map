@@ -15,6 +15,11 @@ class POGO_user {
         return $this->wpData->user_firstname;
     }
     
+    public function getRole() {
+        $role = ($this->getAdminCommunities()) ? 'communityAdmin' : 'user' ;
+        return $role;
+    }
+    
     public function getAdminCommunities() {
         $admin_communities = get_field('admin_communities', 'user_'.$this->wpId);
         if( empty( $admin_communities ) ) return false;
@@ -35,6 +40,21 @@ class POGO_user {
             if( $communty->wpId == $communityId ) {
                 return true;
             }
+        }
+        return false;
+    }
+    
+    public function getSecretKey() {
+        $val = get_field('secret_key', 'user_'.$this->wpId);
+        if( !empty( $val ) ) {
+            return$val;
+        }
+        return false;        
+    }
+    
+    function isAdmin() {
+        if( $this->getRole() == 'communityAdmin' ) {
+            return true;
         }
         return false;
     }

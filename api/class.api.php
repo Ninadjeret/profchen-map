@@ -4,8 +4,6 @@ class POGO_api {
     
     function __construct() {
         $this->version = 1;
-        $this->private_token = 'AsdxZRqPkrst67utwHVM2w4rt4HjxGNcX8XVJDryMtffBFZk3VGM47HkvnF9';
-        $this->public_token = 'AsdxZRqPkrst67utwHVM2w4rt4HjxGNcX8XVJDryMtffBFZk3VGM47HkvnF9';
         add_action( 'rest_api_init', array($this, 'registerRoutes') );
         add_filter( 'rest_url_prefix', array($this,'changeRestPrefix') );
     } 
@@ -86,7 +84,7 @@ class POGO_api {
                 'sourceUser' => array(),
             ),            
         ) ); 
-        register_rest_route( $basename, '/raids/(?P<raidId>[0-9-]+)/update', array(
+        register_rest_route( $basename, '/raid/(?P<raidId>[0-9-]+)/update', array(
             'methods' => 'POST',
             'callback' => array( $this, 'updateRaid' ),
             'args' => array(
@@ -104,6 +102,18 @@ class POGO_api {
                 ),
             ),            
         ) ); 
+        register_rest_route( $basename, '/raid/(?P<raidId>[0-9-]+)/delete', array(
+            'methods' => 'POST',
+            'callback' => array( $this, 'deleteRaid' ),
+            'args' => array(
+                'token' => array(
+                    'required' => true,
+                    'validate_callback' => function($param, $request, $key) {
+                        return $this->isRightToken($param);
+                    }
+                ),
+            ),            
+        ) );
         
         //Gyms
         register_rest_route( $basename, '/gyms/', array(
@@ -195,7 +205,13 @@ class POGO_api {
      */
     
     function isRightToken( $token ) {
-        return ( $token == $this->public_token ) ? true : false ;
+        if( $token == POGO_config::APP_API_PRIVATE_KEY ) {
+            return true;
+        }
+        if( POGO_query::getUserFromSecretKey($token) ) {
+            return true;
+        }
+        return false;
     }
     
     function isValidGym( $gymId ) {
@@ -417,6 +433,17 @@ class POGO_api {
         
         $raid->updateRaid($pokemon_id, $source);
         return;
+    }
+    
+    public function deleteRaid( $request ) {
+        $raid_id = $request->get_param('raidId');       
+        $raid = new POGO_raid($raid_id);
+        $user = POGO_query::getUserFromSecretKey($request->get_param('token'));
+        if( $user->isAdmin() ) {
+            $raid->delete();
+            return true;
+        }
+        return false;
     }
     
     /**

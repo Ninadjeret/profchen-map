@@ -70,6 +70,11 @@ class POGO_raid {
         
     }
     
+    public function delete() {
+        wp_trash_post( $this->wpId );
+        return true;
+    }
+    
     /**
      * 
      * @return boolean|\POGO_gym

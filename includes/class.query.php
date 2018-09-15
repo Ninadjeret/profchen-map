@@ -85,6 +85,25 @@ class POGO_query {
         
     }
     
+    public static function getUserFromSecretKey($secret) {
+        $args = array(
+            'meta_query' => array(
+                array(
+                    'key' => 'secret_key',
+                    'value' => $secret,
+                    'compare' => '='
+                ),
+            )
+        );
+        $user_query = new WP_User_Query($args);
+        $authors = $user_query->get_results();
+        if (!empty($authors)) { 
+            $user_id = $authors[0]->ID;
+            return new POGO_user($user_id);
+        }
+        return false;
+    }
+
 }
 
 new POGO_query();

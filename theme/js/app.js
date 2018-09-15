@@ -2,7 +2,7 @@
 // ON READY
 //======================================================================
 (function ($) {
-    'use strict';
+    'use strict';   
     $(document).ready(function () {    
         //Init Synchronization();
         initSync();
@@ -567,6 +567,10 @@ function openGymModal( gymId ) {
         updateTimeRange( $('.range').val() );
         event.preventDefault();   
     });
+    $('a.modal__action.delete-raid').click(function() {
+        deleteRaid( gym );
+        event.preventDefault();   
+    });
     $('a.modal__action.cancel').click(function() {
         modalActiveScreen('gym');
         event.preventDefault();   
@@ -613,6 +617,7 @@ function openGymModal( gymId ) {
 function loadModalGymData( gym ) {
 
     modalActiveScreen('gym');
+    var userSettings = getCachedSettings(); 
     
     //Préparation des valeurs
     var now = moment();
@@ -695,6 +700,9 @@ function loadModalGymData( gym ) {
     if( gym.raid != false && !now.isBefore(gym.raid.startTime) && now.isBefore(gym.raid.endTime) && typeof gym.raid.pokemon.nameFr == 'undefined' ) {
         $('.mdl-dialog__content ul').append('<li><a class="modal__action update-raid" href="#"><i class="material-icons">fingerprint</i><span>Préciser le Pokémon</span></li>');
     }
+    if( gym.raid != false && now.isBefore(gym.raid.endTime) && userSettings.user.role == 'communityAdmin' ) {
+        $('.mdl-dialog__content ul').append('<li><a class="modal__action delete-raid" href="#"><i class="material-icons">delete</i><span>Supprimer le raid</span></li>');
+    }
     $('.mdl-dialog__content ul').append('<li><a href="'+gym.GoogleMapsUrl+'"><i class="material-icons">navigation</i><span>Itinéraire vers l\'arène</span></li>');
     if( gym.raid != false && now.isBefore(gym.raid.endTime) && gym.raid.source != false && gym.raid.source.url != false ) {
         $('.mdl-dialog__content ul').append('<li><a href="'+gym.raid.source.url+'"><i class="material-icons">message</i><span>Rejoindre la conversation</span></li>');
@@ -720,7 +728,7 @@ function updateRaidBoss( gym, bossId, bossNameFr, dialog ) {
         dialog.close();
         displayPermanentMessage('Enregistrement en cours...');
         var result = $.ajax({
-            url: siteConfig.siteUrl+'/api/v1/raids/'+gym.raid.id+'/update?token=AsdxZRqPkrst67utwHVM2w4rt4HjxGNcX8XVJDryMtffBFZk3VGM47HkvnF9&pokemonId='+bossId+'&userId='+getCachedUserId(), 
+            url: siteConfig.siteUrl+'/api/v1/raid/'+gym.raid.id+'/update?token=AsdxZRqPkrst67utwHVM2w4rt4HjxGNcX8XVJDryMtffBFZk3VGM47HkvnF9&pokemonId='+bossId+'&userId='+getCachedUserId(), 
             method: 'POST', 
             success: function (data) {
                 downloadGyms().then( function(){
@@ -838,6 +846,27 @@ function sendNewFutureRaid( gym, eggLevel, startTime, dialog ) {
         });
         return result;        
     }      
+}
+
+function deleteRaid( gym ) {
+    var userSettings = getCachedSettings(); 
+    var result = confirm('Supprimer le raid à l\'arène '+gym.nameFr+' ('+gym.city+') ?');
+    if (result) {
+        dialog.close();
+        displayPermanentMessage('Suppression en cours...');
+        var result = $.ajax({
+            url: siteConfig.siteUrl+'/api/v1/raid/'+gym.raid.id+'/delete?token='+userSettings.user.secretKey, 
+            method: 'POST', 
+            success: function (data) {
+                downloadGyms().then( function(){
+                        loadRaids();
+                        loadMarkers();
+                        displayDeleteMessage('Le raid a été supprmimé');
+                    });               
+            }
+        });
+        return result;        
+    }    
 }
 //======================================================================
 // SETTINGS FUNCTIONS
