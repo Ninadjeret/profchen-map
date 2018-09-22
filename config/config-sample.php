@@ -12,5 +12,7 @@ class POGO_config {
     const APP_API_PUBLIC_KEY = 'YOUR_APP_API_PUBLIC_KEY';
     const APP_API_PRIVATE_KEY = 'YOUR_APP_API_PRIVATE_KEY';
     
+    const GOOGLE_MAPS_API_KEY = 'YOUR_GOOGLE_MAPS_API_KEY';
+    
 }
 

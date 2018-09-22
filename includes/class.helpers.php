@@ -607,6 +607,6 @@ public static function deleteAccents($string) {
     }
     
     public static function getCities() {
-        return array('Beaulieu', 'Bourgbarré', 'Bruz', 'Cesson', 'Chartres', 'Noyal', 'Orgères', 'Pont-Péan', 'Rennes Sud', 'Saint-Erblon', 'Saint-Armel', 'Vern');
+        return array('Beaulieu', 'Bourgbarré', 'Bruz', 'Cesson', 'Chartres', 'Nouvoitou', 'Noyal', 'Orgères', 'Pont-Péan', 'Rennes Sud', 'Saint-Erblon', 'Saint-Armel', 'Vern');
     }
 }
