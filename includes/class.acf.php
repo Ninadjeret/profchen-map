@@ -35,7 +35,7 @@ class POGO_acf {
     }
     
     function setGoogleApiKey( $api ) {
-        acf_update_setting('google_api_key', POGO_config::GOOGLE_MAPS_API_KEY );
+        acf_update_setting('google_api_key', POGO_config::get('GoogleMapsApiKey') );
     }
     
     function readOnly( $field ) {

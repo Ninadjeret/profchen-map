@@ -27,7 +27,7 @@ get_header();
 
 <?php get_footer(); ?>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo POGO_config::GOOGLE_MAPS_API_KEY; ?>"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo POGO_config::get('GoogleMapsApiKey'); ?>"></script>
 <script type="text/javascript">
 (function($) {
     //var map = null;

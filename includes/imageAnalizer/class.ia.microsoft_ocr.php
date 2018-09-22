@@ -3,8 +3,8 @@
 class POGO_IA_MicrosoftOCR {
     
     function __construct() {
-        $this->apiKey = POGO_config::MICROSOFT_API_KEY;
-        $this->baseUrl = POGO_config::MICROSOFT_SERVER.'/vision/v2.0/recognizeText?mode=Printed';
+        $this->apiKey = POGO_config::get('MicrosoftApiKey');
+        $this->baseUrl = POGO_config::get('MicrosoftServer').'/vision/v2.0/recognizeText?mode=Printed';
     }
     
     public function read( $image_url ) {

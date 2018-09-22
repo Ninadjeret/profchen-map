@@ -161,7 +161,7 @@ class POGO_raid {
         if( empty($dbtime) ) return false;
         
         $end_time = new DateTime($dbtime); 
-        $end_time->modify( '+ 45 minutes' );
+        $end_time->modify( '+ '.POGO_config::get('activeRaidDuration').' minutes' );
         return $end_time;
     }
     

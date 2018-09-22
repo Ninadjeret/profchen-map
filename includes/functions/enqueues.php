@@ -14,6 +14,8 @@ if (!function_exists('b4st_enqueues')) {
         $config = array(
             'assetsUrl' => POGO_config::ASSETS_URL,
             'siteUrl'   => POGO_config::APP_URL,
+            'futureRaidDuration' => POGO_config::get('futureRaidDuration'),
+            'activeRaidDuration' => POGO_config::get('activeRaidDuration'),
         );
 
         wp_register_style('bootstrap-css', 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css', false, '4.1.0', null);

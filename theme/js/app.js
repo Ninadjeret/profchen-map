@@ -452,7 +452,7 @@ function activeTimers() {
         $(this).countdown(startTime, {defer: null})
             .on('update.countdown', function(event) {
                 $(this).text(
-                    event.strftime('Dans %M min')
+                    event.strftime('Dans %N min')
                 );
             })
             .on('finish.countdown', function(event) {
@@ -466,7 +466,7 @@ function activeTimers() {
         $(this).countdown(endTime, {defer: null})
             .on('update.countdown', function(event) {
                 $(this).text(
-                    event.strftime('Reste %M min')
+                    event.strftime('Reste %N min')
                 );
             })
             .on('finish.countdown', function(event) {
@@ -636,7 +636,7 @@ function loadModalGymData( gym ) {
         $('.mdl-dialog__egg img').attr( 'src', 'https://assets.profchen.fr/img/eggs/egg_'+gym.raid.eggLevel+'.png');
         $('#dialog .mdl-dialog__counter').countdown(gym.raid.startTime, {defer: null})
             .on('update.countdown', function(event) {
-                $('#dialog .mdl-dialog__counter').text( event.strftime('%M:%S'));
+                $('#dialog .mdl-dialog__counter').text( event.strftime('%N:%S'));
             })
             .on('finish.countdown', function(event) {
                     console.log('Début du raid');
@@ -650,7 +650,7 @@ function loadModalGymData( gym ) {
             $('.mdl-dialog__egg img').attr( 'src', 'https://assets.profchen.fr/img/eggs/egg_'+gym.raid.eggLevel+'.png');                       
             $('#dialog .mdl-dialog__counter').countdown(gym.raid.endTime, {defer: null})
                 .on('update.countdown', function(event) {
-                    $('#dialog .mdl-dialog__counter').text( event.strftime('%M:%S'));
+                    $('#dialog .mdl-dialog__counter').text( event.strftime('%N:%S'));
                 })
                 .on('finish.countdown', function(event) {
                         console.log('Raid terminé');
@@ -663,12 +663,12 @@ function loadModalGymData( gym ) {
             $('.mdl-dialog__egg img').attr( 'src', gym.raid.pokemon.thumbnailUrl);
             $("#dialog .mdl-dialog__counter").countdown(gym.raid.endTime, function (event) {
                 $(this).text(
-                    event.strftime('%M:%S')
+                    event.strftime('%N:%S')
                 );
             }); 
             $('#dialog .mdl-dialog__counter').countdown(gym.raid.endTime, {defer: null})
                 .on('update.countdown', function(event) {
-                    $('#dialog .mdl-dialog__counter').text( event.strftime('%M:%S'));
+                    $('#dialog .mdl-dialog__counter').text( event.strftime('%N:%S'));
                 })
                 .on('finish.countdown', function(event) {
                         console.log('Raid terminé');
@@ -775,7 +775,7 @@ function updateTimeRange( val ) {
     var raidStartTime = moment();
     var raidEndTime = moment();
     if( val >= 0 ) {
-        var timeLeft = 45 - val;
+        var timeLeft = siteConfig.activeRaidDuration - val;
         raidStartTime.subtract(val, 'minutes').minutes();
         raidEndTime.add(timeLeft, 'minutes').minutes();
         $('.step__timer' ).attr( 'data-starttime', raidStartTime.format('YYYY-MM-DD HH:mm:ss') );
@@ -786,7 +786,7 @@ function updateTimeRange( val ) {
     } else {
         var timeLeft = Math.abs(val);
         raidStartTime.add(timeLeft, 'minutes').minutes();
-        raidEndTime.add(timeLeft + 45, 'minutes').minutes();
+        raidEndTime.add(timeLeft + siteConfig.activeRaidDuration, 'minutes').minutes();
         $('.step__timer').attr( 'data-starttime', raidStartTime.format('YYYY-MM-DD HH:mm:ss') );
         $('.step__timer--delai').html('Le raid débute dans <strong>' + timeLeft + ' min</strong> ');
         $('.step__timer--horaires').html( 'De <strong>' + raidStartTime.format('HH[h]mm') + '</strong>  à <strong>' + raidEndTime.format('HH[h]mm') + '</strong> ' );
