@@ -31,7 +31,7 @@ class POGO_connector {
             $description = "Pop : de ".$raid->getStartTime()->format('H\hi')." à ".$raid->getEndTime()->format('H\hi');
         }
         
-        if( $raid->getPokemon() ) {
+        if( $raid->getPokemon() ) {           
             $title = html_entity_decode('Raid '.$raid->getPokemon()->getNameFr().' jusqu\'à '.$raid->getEndTime()->format('H\hi'));
             $img_url = $raid->getPokemon()->getThumbnailUrl();
         }
@@ -69,6 +69,19 @@ class POGO_connector {
         return apply_filters('pogo/raid/annonce/embedData', $data, $raid, $this->wpId);
     }
     
+    public function formatData2( $raid ) {
+        
+        //Check
+        if( !$this->getCommunity() ) return false;
+        
+        $embed = $this->formatData($raid);
+        return apply_filters('pogo/raid/annonce/botData', array(
+            'serverId' => $this->getCommunity()->externalId,
+            'channelName' => '',
+            'embed' => $embed,
+        ));
+    }
+    
     /**
      * Send formatted emebed message to Discord webhook
      * 
@@ -77,9 +90,10 @@ class POGO_connector {
      * 
      * @param array $data
      */
-    public function sendToWebhook( $data ) {
+    public function sendToWebhook( $data, $url = null ) {
+        $url = ( empty( $url ) ) ? $this->url : $url ;
         $data_string = json_encode($data);
-        $ch = curl_init($this->url);
+        $ch = curl_init($url);
         //$ch = curl_init('https://discordapp.com/api/webhooks/454871314247712769/cml6WTXejSEm3zJrczkcbNc8IBUBEaf9gvw-rbqoig831uUrT03XJ27o2MqBAsLWIvJY');
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
@@ -88,10 +102,9 @@ class POGO_connector {
             'Content-Type: application/json',
             'Content-Length: ' . strlen($data_string))
         );
-
         $result = curl_exec($ch); 
-        error_log( print_r( $result, true ) );
     }  
+
     
     /**
      * Get egg color for emebed message left border

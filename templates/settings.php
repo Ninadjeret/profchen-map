@@ -32,7 +32,7 @@ get_header();
             ) );
             ?>
             <?php 
-            POGO_settings::displaySelectSetting( array(
+            /*POGO_settings::displaySelectSetting( array(
                 'id'            => 'mapDefaultPosition',
                 'title'         => 'Position par défaut',
                 'description'   => 'Cet emplacement sera affiché par défaut à l\'ouverture de la carte',
@@ -41,7 +41,7 @@ get_header();
                     'discord_vern'  => 'Vern et alentours',
                     //'last_position' => 'Dernière position utilisée'
                 )
-            ) );
+            ) );*/
             ?>
         </div>
     </div>
@@ -73,7 +73,7 @@ get_header();
     <div class="settings-section about">
         <div class="section__title">A propos</div> 
         <p class="credit">
-            Prof Chen map, créé pour vous avec <i class="material-icons">favorite</i><br>
+            Prof Chen <?php echo ( POGO_network::isMainSite() ) ? 'map' : get_bloginfo('name') ; ?>, créé pour vous avec <i class="material-icons">favorite</i><br>
             Version <span id="version"></span>
         </p>
     </div>

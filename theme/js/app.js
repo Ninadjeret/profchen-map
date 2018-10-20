@@ -32,12 +32,11 @@
         //Settings
          $('#version').html( getCachedVersion() );
          
-         //Range
-         $(document).on('input', '.range', function() {
+        //Range
+        $(document).on('input', '.range', function() {
             updateTimeRange( $(this).val() );
         });
-              
-        
+                     
     });
 }(jQuery));
 
@@ -166,49 +165,11 @@ function getCachedUserId() {
 
 /**
  * 
- * @param {type} $el
- * @returns {google.maps.Map|createMap.map}
- */
-function createMap( $el ) {
-
-    var zoom = 12;
-    var settings = getCachedSettings();
-    var lat = 48.033353;
-    var lng = -1.601819;
-    if( settings.mapDefaultPosition == 'discord_chartres' ) {
-        lng = -1.699008744618699;
-    }
-
-    var args = {
-            zoom                : zoom,
-            streetViewControl   : false,
-            center              : new google.maps.LatLng(lat, lng),
-            mapTypeId           : google.maps.MapTypeId.ROADMAP,
-            disableDefaultUI    : true
-    };	        	
-    var map = new google.maps.Map( $el[0], args);
-    map.markers = [];	
-
-    /*map.addListener('zoom_changed', function() {
-        //setCookie('mapZoom', map.getZoom(), 30);
-        //updateSetting( 'mapZoom', map.getZoom() );
-    });*/
-    
-    /*map.addListener('center_changed', function () {
-        console.log( map.getCenter().lng() );
-    });*/    
-
-    // return
-    return map;	
-}
-
-/**
- * 
  * @returns {undefined}
  */
 function loadMarkers() {   
     
-    if ( $( ".acf-map" ).length === 0 ) {
+    if ( $( "#mapid" ).length === 0 ) {
         return;
     }
     
@@ -216,7 +177,7 @@ function loadMarkers() {
     var settings = getCachedSettings();
     deleteGymMarkers();
     window.gymMarkers = [];   
-    gyms.forEach(function(gym) {       
+    gyms.forEach(function(gym) { 
         if( (settings.mapHideEmpty === false && gym.raid === false) || gym.raid !== false ) {
             var mapMarker = addGymMarker( gym, window.map );
             window.gymMarkers.push(mapMarker); 
@@ -233,64 +194,48 @@ function loadMarkers() {
  */
 function addGymMarker( item, map ) {
 
-	// var
-	var latlng = new google.maps.LatLng( item.GPSCoordinates.lat, item.GPSCoordinates.lng );
-        
-        //Create image
-        var image = 'https://assets.profchen.fr/img/map/map_marker_default.png';
-        var label = false;
+        //Valeurs par défaut
         var zindex = 1;
-        var raidId = false;
-        var url = false;
+        var label = false;
+        var url = 'https://assets.profchen.fr/img/map/map_marker_default.png';       
+        var imgclassname = 'map-marker__img';
+
+        if(item.raidEx) {
+            url = 'https://assets.profchen.fr/img/map/map_marker_default_ex.png'; 
+        }
+        
+        var html = '<img class="'+imgclassname+'" src="'+url+'"/>';
+
         if( item.raid !== false ) {
+            imgclassname = imgclassname + ' raid';
             var now = moment();
             raidId = item.raid.id;
             if( item.raid.status === 'active' ) {
                 var raidEndTime = moment( item.raid.endTime );
                 label = raidEndTime.diff(now, 'minutes') + ' min';                
-                url = 'https://assets.profchen.fr/img/map/map_marker_future_'+item.raid.eggLevel+'.png';
+                url = 'https://assets.profchen.fr/img/map/map_marker_active_'+item.raid.eggLevel+'.png';
                 if( item.raid.pokemon != false && typeof item.raid.pokemon.pokedexId != 'undefined' ) {
-                    url = 'https://assets.profchen.fr/img/map/map_marker_pokemon_'+item.raid.pokemon.pokedexId+'.png';    
+                    url = 'https://assets.profchen.fr/img/map/map_marker_pokemon_'+item.raid.pokemon.pokedexId+'.png';
                 }
             } else {
                 var raidStartTime = moment( item.raid.startTime );
                 label = raidStartTime.diff(now, 'minutes') + ' min';
                 url = 'https://assets.profchen.fr/img/map/map_marker_future_'+item.raid.eggLevel+'.png';
             }
-            zindex = item.raid.eggLevel * 100;
-            image = {
-                 url: url,
-                 size: new google.maps.Size(46, 49),
-                 scaledSize: new google.maps.Size(46, 49),
-                 labelOrigin: new google.maps.Point(23, 39)
-            };             
-        }       
-	// create marker
-	var mapMarker = new google.maps.Marker({
-		position	: latlng,
-		map		: map,
-                title: 'Hello World!',
-                label: {
-                    text: label,
-                    color: 'white',
-                    fontSize: '11px'
-                },
-                labelClass: "labels",
-                icon: image,
-                raidId: raidId,
-                gymId: item.id,
-                gymNameFr: item.nameFr,
-                gymCity:  item.city,
-                zIndex: zindex
-                
-	});
-        
-	// add to array
-	//map.markers.push( mapMarker );
-        google.maps.event.addListener(mapMarker, 'click', function() {
-                openGymModal( mapMarker.gymId );
+            var html = '<img class="'+imgclassname+'" src="'+url+'"/>' + '<span class="map-marker__label">'+label+'</span>'
+            zindex = item.raid.eggLevel * 100;           
+        }
 
+        var mapMarker = L.marker([item.GPSCoordinates.lat, item.GPSCoordinates.lng], {
+            icon: new L.DivIcon({
+                className: 'map-marker__wrapper',
+                html: html,
+            }),
+            zIndexOffset: zindex,
+        }).addTo(window.map).on('click', function(e){
+            openGymModal( e.target.gymId );
         });
+        mapMarker.gymId = item.id;
         
         return mapMarker;
 
@@ -303,12 +248,7 @@ function addGymMarker( item, map ) {
 function centerMapToPlayer() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
-            var pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude
-            };
-
-            window.map.setCenter(pos);
+            map.panTo(new L.LatLng(position.coords.latitude, position.coords.longitude));
         });
     }
 }
@@ -319,17 +259,12 @@ function centerMapToPlayer() {
  */
 function displayPlayerOnMap() {
     if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-            
-            var pos = new google.maps.LatLng( position.coords.latitude, position.coords.longitude )
-
-            var mapMarker = new google.maps.Marker({
-                    position	: pos,
-                    map		: map,
-                    title: 'It\'s me, Mario',
-                    icon: 'https://assets.profchen.fr/img/map/map_marker_player.png',
-                    zIndex: 9999
-            });
+        navigator.geolocation.getCurrentPosition(function (position) {           
+            var mapMarker = L.marker([position.coords.latitude, position.coords.longitude], {
+                icon: L.icon({
+                    iconUrl: 'https://assets.profchen.fr/img/map/map_marker_player.png',
+                }),
+            }).addTo(window.map);
             window.gymMarkers.push(mapMarker); 
             return mapMarker;
         });
@@ -345,7 +280,7 @@ function deleteGymMarkers() {
         return;
     }
     for (var i = 0; i < window.gymMarkers.length; i++) {
-        window.gymMarkers[i].setMap(null);
+        window.map.removeLayer(window.gymMarkers[i]);
     }
     window.gymMarkers = [];
 }
@@ -619,6 +554,13 @@ function loadModalGymData( gym ) {
     modalActiveScreen('gym');
     var userSettings = getCachedSettings(); 
     
+    //Gestion RaidEx
+    if(gym.raidEx) {
+        $('.mdl-dialog__wrap').addClass('raidex');
+    } else {
+        $('.mdl-dialog__wrap').removeClass('raidex');
+    }
+    
     //Préparation des valeurs
     var now = moment();
     $('#dialog .mdl-dialog__title').html(gym.nameFr);
@@ -723,12 +665,13 @@ function loadModalChoosePokemon( gym ) {
 }
 
 function updateRaidBoss( gym, bossId, bossNameFr, dialog ) {
+    var settings = getCachedSettings();
     var result = confirm('Confirmer '+bossNameFr+' comme boss de raid actuellement dans l\'arène '+gym.nameFr+' ('+gym.city+') ?');
     if (result) {
         dialog.close();
         displayPermanentMessage('Enregistrement en cours...');
         var result = $.ajax({
-            url: siteConfig.siteUrl+'/api/v1/raid/'+gym.raid.id+'/update?token=AsdxZRqPkrst67utwHVM2w4rt4HjxGNcX8XVJDryMtffBFZk3VGM47HkvnF9&pokemonId='+bossId+'&userId='+getCachedUserId(), 
+            url: siteConfig.siteUrl+'/api/v1/raid/'+gym.raid.id+'/update?token='+settings.user.secretKey+'&pokemonId='+bossId, 
             method: 'POST', 
             success: function (data) {
                 downloadGyms().then( function(){
@@ -808,12 +751,13 @@ function loadPokemonChoices( gym ) {
 }
 
 function sendNewActiveRaid( gym, bossId, bossNameFr, eggLevel, startTime, dialog ) {
+    var settings = getCachedSettings();
     var result = confirm('Confirmer '+bossNameFr+' comme boss de raid actuellement dans l\'arène '+gym.nameFr+' ('+gym.city+') ?');
     if (result) {
         dialog.close();
         displayPermanentMessage('Enregistrement en cours...');
         var result = $.ajax({
-            url: siteConfig.siteUrl+'/api/v1/raids/add?token=AsdxZRqPkrst67utwHVM2w4rt4HjxGNcX8XVJDryMtffBFZk3VGM47HkvnF9&gymId='+gym.id+'&eggLevel='+eggLevel+'&pokemonId='+bossId+'&date='+encodeURI(startTime)+'&sourceType=map&userId='+getCachedUserId(), 
+            url: siteConfig.siteUrl+'/api/v1/raids/add?token='+settings.user.secretKey+'&gymId='+gym.id+'&eggLevel='+eggLevel+'&pokemonId='+bossId+'&date='+encodeURI(startTime)+'&sourceType=map', 
             method: 'GET', 
             success: function (data) {
                 downloadGyms().then( function(){
@@ -828,13 +772,13 @@ function sendNewActiveRaid( gym, bossId, bossNameFr, eggLevel, startTime, dialog
 }
 
 function sendNewFutureRaid( gym, eggLevel, startTime, dialog ) {
-    console.log(startTime);
+    var settings = getCachedSettings();
     var result = confirm('Confirmer un raid '+eggLevel+'T à venir à l\'arène '+gym.nameFr+' ('+gym.city+') ?');
     if (result) {
         dialog.close();
         displayPermanentMessage('Enregistrement en cours...');
         var result = $.ajax({
-            url: siteConfig.siteUrl+'/api/v1/raids/add?token=AsdxZRqPkrst67utwHVM2w4rt4HjxGNcX8XVJDryMtffBFZk3VGM47HkvnF9&gymId='+gym.id+'&eggLevel='+eggLevel+'&date='+encodeURI(startTime)+'&sourceType=map&userId='+getCachedUserId(), 
+            url: siteConfig.siteUrl+'/api/v1/raids/add?token='+settings.user.secretKey+'&gymId='+gym.id+'&eggLevel='+eggLevel+'&date='+encodeURI(startTime)+'&sourceType=map', 
             method: 'GET', 
             success: function (data) {
                 downloadGyms().then( function(){
@@ -849,13 +793,13 @@ function sendNewFutureRaid( gym, eggLevel, startTime, dialog ) {
 }
 
 function deleteRaid( gym ) {
-    var userSettings = getCachedSettings(); 
+    var settings = getCachedSettings();
     var result = confirm('Supprimer le raid à l\'arène '+gym.nameFr+' ('+gym.city+') ?');
     if (result) {
         dialog.close();
         displayPermanentMessage('Suppression en cours...');
         var result = $.ajax({
-            url: siteConfig.siteUrl+'/api/v1/raid/'+gym.raid.id+'/delete?token='+userSettings.user.secretKey, 
+            url: siteConfig.siteUrl+'/api/v1/raids/'+gym.raid.id+'/delete?token='+settings.user.secretKey, 
             method: 'POST', 
             success: function (data) {
                 downloadGyms().then( function(){

@@ -174,5 +174,13 @@ class POGO_gym {
         }
         return new POGO_raid($raids[0]);
     }
+    
+    public function isRaidEx() {
+        $value = get_field('gym_ex', $this->wpId);
+        if( empty($value) ) {
+            return false;
+        }
+        return true;  
+    }
 }
 

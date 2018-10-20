@@ -223,21 +223,7 @@ class POGO_IA_coordinates {
                 (object) array( 'x' => $this->image_width * 0.6954, 'y' => $margin_top, 'lvl' => array(5) ), //5
             );            
         }
-        
-        elseif( $this->ratio < 0.60 ) {
-            $margin_top = $this->image_height * 0.293;
-            return array(
-                (object) array( 'x' => $this->image_width * 0.3037, 'y' => $margin_top, 'lvl' => array(5) ), //5
-                (object) array( 'x' => $this->image_width * 0.3611, 'y' => $margin_top, 'lvl' => array(4) ), //4
-                (object) array( 'x' => $this->image_width * 0.4019, 'y' => $margin_top, 'lvl' => array(5,3) ), //5, 3
-                (object) array( 'x' => $this->image_width * 0.4509, 'y' => $margin_top, 'lvl' => array(4,2) ), //4, 2
-                (object) array( 'x' => $this->image_width * 0.4990, 'y' => $margin_top, 'lvl' => array(5,3,1) ), //5, 3, 1
-                (object) array( 'x' => $this->image_width * 0.5481, 'y' => $margin_top, 'lvl' => array(4,2) ), //4, 2
-                (object) array( 'x' => $this->image_width * 0.5972, 'y' => $margin_top, 'lvl' => array(5,3) ), //5, 3
-                (object) array( 'x' => $this->image_width * 0.6388, 'y' => $margin_top, 'lvl' => array(4) ), //4
-                (object) array( 'x' => $this->image_width * 0.6954, 'y' => $margin_top, 'lvl' => array(5) ), //5
-            );            
-        }
+
         
         else {
             $margin_top = $this->image_height * 0.296875;

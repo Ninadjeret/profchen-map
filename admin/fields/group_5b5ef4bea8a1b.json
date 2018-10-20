@@ -1,0 +1,149 @@
+{
+    "key": "group_5b5ef4bea8a1b",
+    "title": "Utilisateur",
+    "fields": [
+        {
+            "key": "field_5bc577e78083c",
+            "label": "Clé secrète",
+            "name": "secret_key",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b5ef4e9ba7e9",
+            "label": "Raids",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5b65364929673",
+            "label": "Masquer les arênes vides",
+            "name": "mapHideEmpty",
+            "type": "true_false",
+            "instructions": "N'afficher sur la carte que les arênes avec un raid en cours ou à venir",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5b65324bb7be3",
+            "label": "Position par défaut",
+            "name": "mapDefaultPosition",
+            "type": "select",
+            "instructions": "Cet emplacement sera affiché par défaut à l'ouverture de la carte",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "discord_vern": "Vern",
+                "discord_chartres": "Chartres",
+                "last_position": "Dernier position"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5b752ee546ef2",
+            "label": "Admin de communautés",
+            "name": "admin_communities",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "community"
+            ],
+            "taxonomy": "",
+            "allow_null": 1,
+            "multiple": 1,
+            "return_format": "id",
+            "ui": 1,
+            "choices": {
+                "1794": "Discord du Prof Chen",
+                "1762": "Messenger de Chartres",
+                "1384": "Discord de Chartres",
+                "1379": "Discord de Vern"
+            }
+        },
+        {
+            "key": "field_5b7690ec8b2e0",
+            "label": "Dernière visite",
+            "name": "last_visit",
+            "type": "date_time_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "d\/m\/Y H:i",
+            "return_format": "d\/m\/Y H:i",
+            "first_day": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "user_form",
+                "operator": "==",
+                "value": "all"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1540010034
+}

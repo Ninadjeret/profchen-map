@@ -429,7 +429,7 @@ public static function deleteAccents($string) {
 }
     
     public static function findExstingGym( $text ) {
-        foreach (POGO_helpers::getGyms() as $gym) {
+        foreach (POGO_query::getGyms() as $gym) {
             foreach( $gym->getSearhPatterns() as $pattern ) {
                 if( strstr($text, $pattern) ) {
                     return $gym; 
@@ -566,7 +566,7 @@ public static function deleteAccents($string) {
     
     public static function getRaids( $status = array('active', 'future') ) {
         if(is_string($status) ) $status = array($status);
-        $gyms = POGO_helpers::getGyms();
+        $gyms = POGO_query::getGyms();
         $raids = array();
         foreach( $gyms as $gym ) {
             if( in_array('active', $status) && $gym->getCurrentRaid() ) {
@@ -607,6 +607,6 @@ public static function deleteAccents($string) {
     }
     
     public static function getCities() {
-        return array('Beaulieu', 'Bourgbarré', 'Bruz', 'Cesson', 'Chartres', 'Nouvoitou', 'Noyal', 'Orgères', 'Pont-Péan', 'Rennes Sud', 'Saint-Erblon', 'Saint-Armel', 'Vern');
+        return apply_filters('pogo/cities', array('Beaulieu', 'Bourgbarré', 'Bruz', 'Cesson', 'Chartres', 'Nouvoitou', 'Noyal', 'Orgères', 'Pont-Péan', 'Rennes Sud', 'Saint-Erblon', 'Saint-Armel', 'Vern'));
     }
 }

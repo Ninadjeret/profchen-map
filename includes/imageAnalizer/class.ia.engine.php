@@ -10,6 +10,9 @@ class POGO_IA_engine {
     function __construct( $source ) {
         
         $this->debug = true;
+        $this->settings = wp_parse_args( $settings, array(
+            'gymDetection' => true,
+        ) );
         $this->result = (object) array(
             'gym' => false,
             'eggLevel' => false,
@@ -217,6 +220,16 @@ class POGO_IA_engine {
      
     
     function getGym() {
+        
+        if( $this->settings['gymDetection'] === false ) {
+            $palier = ( $this->imageData->type == 'egg' ) ? count($this->ocr) : count($this->ocr) - 1; 
+            $gym = $this->ocr[$palier - 2];
+            if(strlen( $this->ocr[$palier - 3] ) > 10 ) {
+                $gym = $this->ocr[$palier - 3].' '.$gym;
+            }
+            return $gym; 
+        }
+        
         $query = implode(' ', $this->ocr);
         $gym = $this->gymSearch->findGym($query, 70);
         if( $gym ) {
@@ -224,6 +237,7 @@ class POGO_IA_engine {
             return $gym;
         }
         if( $this->debug ) $this->_log('Nothing found in database :(' );
+        
     }
     
     function getPokemon() {

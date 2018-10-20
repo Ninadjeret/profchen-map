@@ -44,10 +44,18 @@ class POGO_user {
         return false;
     }
     
+    public function addSecretKey() {
+        if( $this->getSecretKey() ) return false;
+        
+        $secret = wp_generate_password(30, false).$this->id.wp_generate_password(20, false);
+        update_field('secret_key', $secret, 'user_'.$this->wpId);
+        return true;
+    }
+    
     public function getSecretKey() {
         $val = get_field('secret_key', 'user_'.$this->wpId);
         if( !empty( $val ) ) {
-            return$val;
+            return $val;
         }
         return false;        
     }

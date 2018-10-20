@@ -26,19 +26,21 @@ $user = ( is_user_logged_in() ) ? new POGO_user( get_current_user_id() ) : false
         <!-- WebApp compatibility -->
         <meta name="theme-color" content="#1c8796">
         <meta name="mobile-web-app-capable" content="yes">
-        <link rel="icon" sizes="192x192" href="<?php echo POGO_config::ASSETS_URL; ?>/img/profchen_logo_192.png">
+        <link rel="icon" sizes="192x192" href="<?php echo POGO_config::get('AssetsUrl'); ?>/img/profchen_logo_192.png">
         <link rel="manifest" href="<?php echo get_stylesheet_directory_uri(); ?>/manifest.json?ver=<?php echo PROFCHEN_VERSION; ?>">
         <!-- ./ WebApp compatibility -->
         
         <!-- Apple compatibility -->
-        <link rel="apple-touch-icon" href="<?php echo POGO_config::ASSETS_URL; ?>/img/profchen_logo_128.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="<?php echo POGO_config::ASSETS_URL; ?>/img/profchen_logo_152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="<?php echo POGO_config::ASSETS_URL; ?>/img/profchen_logo_180.png">
-        <link rel="apple-touch-icon" sizes="167x167" href="<?php echo POGO_config::ASSETS_URL; ?>/img/profchen_logo_167.png">
-        <link rel="apple-touch-startup-image" href="<?php echo POGO_config::ASSETS_URL; ?>/img/bg_loading.jpg">
-        <meta name="apple-mobile-web-app-title" content="<?php echo POGO_config::APP_NAME; ?>">
+        <link rel="apple-touch-icon" href="<?php echo POGO_config::get('AssetsUrl'); ?>/img/profchen_logo_128.png">
+        <link rel="apple-touch-icon" sizes="152x152" href="<?php echo POGO_config::get('AssetsUrl'); ?>/img/profchen_logo_152.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="<?php echo POGO_config::get('AssetsUrl'); ?>/img/profchen_logo_180.png">
+        <link rel="apple-touch-icon" sizes="167x167" href="<?php echo POGO_config::get('AssetsUrl'); ?>/img/profchen_logo_167.png">
+        <link rel="apple-touch-startup-image" href="<?php echo POGO_config::get('AssetsUrl'); ?>/img/bg_loading.jpg">
+        <meta name="apple-mobile-web-app-title" content="<?php echo POGO_config::get('appName'); ?>">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <!-- ./ Apple compatibility -->
+        
+        <script src="https://unpkg.com/vue"></script>
         
     </head>
 
@@ -57,25 +59,25 @@ $user = ( is_user_logged_in() ) ? new POGO_user( get_current_user_id() ) : false
         <div class="mdl-layout__header-row mdl-typography--text-center">
             <?php if (is_front_page()) { ?>
                 <div class="mdl-layout-spacer"></div>
-                <span class="mdl-layout-title"><img src="https://assets.profchen.fr/img/logo_main_400.png"> PROF CHEN<small>&nbsp;map</small></span>
+                <span class="mdl-layout-title"><img src="https://assets.profchen.fr/img/logo_main_400.png"> PROF CHEN<small>&nbsp;<?php echo ( POGO_network::isMainSite() ) ? 'map' : get_bloginfo('name') ; ?></small></span>
                 <div class="mdl-layout-spacer"></div>
             <?php } else { ?>
                 <span class="mdl-layout-title"><?php the_title(); ?></span>
             <?php } ?>
     </header>
     <div class="main-menu <?php if( $user && $user->getAdminCommunities() ) echo 'admin'; ?>">
-        <div class="item <?php echo ( is_page(2) ) ? 'active' : '' ; ?>">
-            <a href="<?php echo get_permalink(2); ?>">
+        <div class="item <?php echo ( is_page(POGO_routes::getMapsPageId()) ) ? 'active' : '' ; ?>">
+            <a href="<?php echo get_permalink(POGO_routes::getMapsPageId()); ?>">
                 <i class="material-icons">map</i><span>Carte</span>
             </a>
         </div>
-        <div class="item <?php echo ( is_page(1048) ) ? 'active' : '' ; ?>">
-            <a href="<?php echo get_permalink(1048); ?>">
+        <div class="item <?php echo ( is_page(POGO_routes::getAlertsPageId()) ) ? 'active' : '' ; ?>">
+            <a href="<?php echo get_permalink(POGO_routes::getAlertsPageId()); ?>">
                 <i class="material-icons">notifications_active</i><span>Alertes</span>
             </a>
         </div>   
-        <div class="item <?php echo ( is_page(1079) ) ? 'active' : '' ; ?>">
-            <a href="<?php echo get_permalink(1079); ?>">
+        <div class="item <?php echo ( is_page(POGO_routes::getSettingsPageId()) ) ? 'active' : '' ; ?>">
+            <a href="<?php echo get_permalink(POGO_routes::getSettingsPageId()); ?>">
                 <i class="material-icons">settings</i><span>Réglages</span>
             </a>
         </div> 

@@ -802,7 +802,7 @@ class POGO_imageAnalyzer {
      * @return boolean|\POGO_gym
      */
     private function _findExstingGym( $text ) {
-        foreach (POGO_helpers::getGyms() as $gym) {
+        foreach (POGO_query::getGyms() as $gym) {
             foreach( $gym->getSearhPatterns() as $pattern ) {
                 if( strstr($text, $pattern) ) {
                     return $gym; 

@@ -45,6 +45,7 @@ get_header(); ?>
                 pageHome,
                 pageRaids,
                 pageNews,
+                pageSettings,
                 pageAdmin,
                 pagePolicy,
                 '/wp-content/themes/site/theme/css/b4st.css?ver='+CACHE_VERSION,
@@ -59,7 +60,7 @@ get_header(); ?>
     
     setTimeout(function(){
         document.location.href="<?php echo home_url(); ?>"
-    }, 5000);
+    }, 10000);
     
     });
 
@@ -68,3 +69,4 @@ get_header(); ?>
 <?php 
 get_footer();
 ?>
+

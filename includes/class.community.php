@@ -4,8 +4,12 @@ class POGO_community {
     
     function __construct( $id, $discord_id = false ) {
         $this->wpId = $id;
+        /**
+         * @deprecated since version 1.2
+         */
         $this->discordId = ( $discord_id ) ? $discord_id : $this->_getDiscordId() ;
         $this->externalId = $this->discordId;
+        $this->serverId = get_current_blog_id();
     }
     
     public static function initFromExternalId( $externalId ) {
@@ -20,7 +24,8 @@ class POGO_community {
     }
     
     public function getNameFr() {
-        return html_entity_decode( get_field('community_name_fr', $this->wpId) );
+        $val = get_field('community_name_fr', $this->wpId);
+        return html_entity_decode( $val );
     }
     
     public function getType() {
@@ -129,7 +134,7 @@ class POGO_community {
     public function getNewMemberChannel() {
         $val = get_field('community_welcome_channel', $this->wpId);
         if( empty($val) ) {
-            return 'Bienvenue {member}';
+            return false;
         }
         return $val;          
     }
