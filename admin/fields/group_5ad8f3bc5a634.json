@@ -60,6 +60,25 @@
             "maxlength": ""
         },
         {
+            "key": "field_5bc895ec62a41",
+            "label": "Éligible Raid Ex",
+            "name": "gym_ex",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
             "key": "field_5ad8f45084f98",
             "label": "Patterns de recherche",
             "name": "search_patterns",
@@ -115,7 +134,7 @@
                     ],
                     "taxonomy": [],
                     "allow_null": 1,
-                    "multiple": 0,
+                    "multiple": 1,
                     "return_format": "id",
                     "ui": 1
                 }
@@ -157,5 +176,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1536175377
+    "modified": 1539872598
 }

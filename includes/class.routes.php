@@ -9,39 +9,101 @@ class POGO_routes {
         add_filter( 'login_redirect ', array( $this, 'loginRedirect' ), 20, 3 );
     }
     
+    public static function getMapsPageId() {
+        return get_option( 'page_on_front' );
+    }
+    
+    public static function getAlertsPageId() {
+        $page = get_page_by_path('alerts');
+        if( $page ) {
+            return $page->ID;
+        }
+        return false;
+    }
+    
+    public static function getSettingsPageId() {
+        $page = get_page_by_path('settings');
+        if( $page ) {
+            return $page->ID;
+        }
+        return false;
+    }
+    
     public static function getLoginPageId() {
-        return 1530;
+        $page = get_page_by_path('login');
+        if( $page ) {
+            return $page->ID;
+        }
+        return false;
     }
     
     public static function getLoadingPageId() {
-        return 1635;
+        $page = get_page_by_path('loading');
+        if( $page ) {
+            return $page->ID;
+        }
+        return false;
     }
     
     public static function getLogoutPageId() {
-        return 1650;
+        $page = get_page_by_path('logout');
+        if( $page ) {
+            return $page->ID;
+        }
+        return false;
     }
     
     public static function getPolicyPageId() {
-        return 1716;
+        $page = get_page_by_path('settings/policy');
+        if( $page ) {
+            return $page->ID;
+        }
+        return false;
     }
     
     public static function getNewsPageId() {
-        return 1081;
+        $page = get_page_by_path('admin/news');
+        if( $page ) {
+            return $page->ID;
+        }
+        return false;
     }
+    
     public static function getAdminPageId() {
-        return 1959;
+        $page = get_page_by_path('admin');
+        if( $page ) {
+            return $page->ID;
+        }
+        return false;
     }
+    
     public static function getAdminConnectorsPageId() {
-        return 1961;
+        $page = get_page_by_path('admin/connectors');
+        if( $page ) {
+            return $page->ID;
+        }
+        return false;
     }
     public static function getAdminNewConnectorPageId() {
-        return 2122;
+        $page = get_page_by_path('admin/connectors/new');
+        if( $page ) {
+            return $page->ID;
+        }
+        return false;
     }
     public static function getAdminCommunitySettingsPageId() {
-        return 2070;
+        $page = get_page_by_path('admin/community');
+        if( $page ) {
+            return $page->ID;
+        }
+        return false;
     }
     public static function getAdminConnectorSettingsPageId() {
-        return 2078;
+        $page = get_page_by_path('admin/connectors/edit');
+        if( $page ) {
+            return $page->ID;
+        }
+        return false;
     }
     
     public static function getNonLoggedPages() {
@@ -50,7 +112,7 @@ class POGO_routes {
     
     public function checkAcces() {
         if( !in_array( get_the_ID(), POGO_routes::getNonLoggedPages() ) && !is_user_logged_in() ) {
-            include( get_stylesheet_directory() . '/templates/login.php' );
+            include( get_template_directory() . '/templates/login.php' );
             exit;
         }
     }

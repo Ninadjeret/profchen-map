@@ -83,7 +83,7 @@ class POGO_gym {
         $end->setTimezone(new DateTimeZone('Europe/Paris'));
         
         $begin = clone $end;         
-        $begin->modify('- 45 minutes');
+        $begin->modify('- '.POGO_config::get('activeRaidDuration').' minutes');
 
         $args = array(
             'post_type' => 'raid',
@@ -132,7 +132,7 @@ class POGO_gym {
         $begin->setTimezone(new DateTimeZone('Europe/Paris'));
         
         $end = clone $begin;         
-        $end->modify('+ 60 minutes');
+        $end->modify('+ '.POGO_config::get('futureRaidDuration').' minutes');
 
         $args = array(
             'post_type' => 'raid',
@@ -173,6 +173,14 @@ class POGO_gym {
             return false;
         }
         return new POGO_raid($raids[0]);
+    }
+    
+    public function isRaidEx() {
+        $value = get_field('gym_ex', $this->wpId);
+        if( empty($value) ) {
+            return false;
+        }
+        return true;  
     }
 }
 

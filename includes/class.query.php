@@ -45,7 +45,7 @@ class POGO_query {
      * @return boolean
      */
     public static function getRaidBosses( $egglevel = false ) {
-        
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
         $args = array(
             'post_type'         => 'pokemon',
             'posts_per_page'    => -1,
@@ -73,6 +73,7 @@ class POGO_query {
         $pokemon = get_posts( $args ); 
         
         if( empty( $pokemon ) ) {
+            restore_current_blog();
             return false;
         }
         
@@ -81,10 +82,50 @@ class POGO_query {
             $return[] = new POGO_pokemon($pokemon_id);
         }
 
+        restore_current_blog();
         return $return;       
         
     }
     
+    public static function getUserFromSecretKey($secret) {
+        $args = array(
+            'meta_query' => array(
+                array(
+                    'key' => 'secret_key',
+                    'value' => $secret,
+                    'compare' => '='
+                ),
+            )
+        );
+        $user_query = new WP_User_Query($args);
+        $authors = $user_query->get_results();
+        if (!empty($authors)) { 
+            $user_id = $authors[0]->ID;
+            return new POGO_user($user_id);
+        }
+        return false;
+    }
+    
+    public static function getCommunities() {
+        $communities = get_posts( array(
+            'post_type'         => 'community',
+            'posts_per_page'    => -1,
+            'fields'            => 'ids',
+            'orderby'           => 'name',
+            'order'             => 'ASC',
+        ) ); 
+
+        if( empty( $communities ) ) {
+            return false;
+        }
+        
+        $return = array();
+        foreach($communities as $community_id) {
+            $return[] = new POGO_community($community_id);
+        }
+        return $return;          
+    }
+
 }
 
 new POGO_query();

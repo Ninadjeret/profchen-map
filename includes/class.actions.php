@@ -27,10 +27,10 @@ class POGO_actions {
     function UpdateRaidOnPublish( $raid_id ) {
         $raid = new POGO_raid($raid_id);
         if( $raid->getEggLevel() ) {
-            $bosses = POGO_helpers::getRaidBosses( $raid->getEggLevel() );
+            $bosses = POGO_query::getRaidBosses( $raid->getEggLevel() );
             if( !empty( $bosses ) && count( $bosses ) === 1 ) {
                 $source = POGO_helpers::getBotSource();
-                $raid->updateRaid($bosses[0], $source);
+                $raid->updateRaid($bosses[0]->wpId, $source);
             }
         }
     }

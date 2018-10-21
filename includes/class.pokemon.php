@@ -11,6 +11,7 @@ class POGO_pokemon {
      */
     function __construct( $wp_id, $pokedex_id = false, $niantic_id = false ) {
         
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
         if( get_post_type($wp_id) != 'pokemon' ) {
             return false;
         }
@@ -19,6 +20,7 @@ class POGO_pokemon {
         $this->pokedexId = ( $pokedex_id ) ? $pokedex_id : $this->_getPokedexId() ;
         $this->nianticId = ( $niantic_id ) ? $niantic_id : $this->_getNianticId() ;
         $this->variantId = $this->_getVariantId() ;
+        restore_current_blog();
     }
     
     
@@ -66,7 +68,10 @@ class POGO_pokemon {
     }
     
     public function getNameFr() {
-        return get_the_title($this->wpId);
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
+        $val = get_the_title($this->wpId);
+        restore_current_blog();
+        return $val;
     }
     
     public function _getVariantId() {
@@ -83,27 +88,35 @@ class POGO_pokemon {
      * @return type
      */
     function getBaseStats() {
-        return (object) array(
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
+        $return = (object) array(
             'attack'    => get_field('base_atk', $this->wpId),
             'defense'    => get_field('base_def', $this->wpId),
             'stamina'    => get_field('base_stam', $this->wpId)
         );
+        restore_current_blog();
+        return $return;
     }
  
-    public function getCp( $lvl, $ivAttack, $ivDefense, $ivStamina ) {       
+    public function getCp( $lvl, $ivAttack, $ivDefense, $ivStamina ) {  
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
         $cp_multiplier = POGO_helpers::get_cp_scalar($lvl);
         $calc_attack = ($this->getBaseStats()->attack + $ivAttack);
         $calc_defense = ($this->getBaseStats()->defense + $ivDefense);
         $calc_stamina = ($this->getBaseStats()->stamina + $ivStamina);
         $cp = (int)($calc_attack * pow($calc_defense, 0.5) * pow($calc_stamina, 0.5) * pow($cp_multiplier, 2) / 10);
+        restore_current_blog();
         return $cp;
     }  
     
     public function isShiny() {
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
         $value = get_field('shiny', $this->wpId);
         if( empty($value) ) {
+            restore_current_blog();
             return false;
         }
+        restore_current_blog();
         return true; 
     }
     
@@ -116,25 +129,32 @@ class POGO_pokemon {
     }
     
     public function getRaidLevel() {
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
         if( !$this->isRaidBoss() ) {
+            restore_current_blog();
             return false;
         }
         $value = get_field('raidboss_egg', $this->wpId);
         if( empty( $value ) ) {
+            restore_current_blog();
             return false;
         }
+        restore_current_blog();
         return $value;         
     }
     
     public function getSearhPatterns() {
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
         $return = array( strtolower( POGO_helpers::deleteAccents( $this->getNameFr() ) ) );
         $patterns = get_field('search_patterns', $this->wpId);
         if( empty( $patterns ) ) {
+            restore_current_blog();
             return $return;
         }
         foreach( $patterns as $pattern ) {
             $return[] = strtolower( POGO_helpers::deleteAccents( $pattern['pattern'] ) );
         }
+        restore_current_blog();
         return $return;
     }
     
@@ -146,16 +166,22 @@ class POGO_pokemon {
     }
     
     public function getParent() {
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
         if( wp_get_post_parent_id( $this->wpId ) ) {
+            restore_current_blog();
             return new POGO_pokemon( wp_get_post_parent_id( $this->wpId ) );
         }
+        restore_current_blog();
         return false;
     }
     
     public function getRaidName() {
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
         if( $this->getParent() ) {
+            restore_current_blog();
             return $this->getParent()->getNameFr();
         }
+        restore_current_blog();
         return $this->getNameFr();
     }
     

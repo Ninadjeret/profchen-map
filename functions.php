@@ -2,19 +2,23 @@
 /*
 All the functions are in the PHP files in the `functions/` folder.
 */
-define('PROFCHEN_VERSION', '1.2.0');
+define('PROFCHEN_VERSION', '1.3.27');
 setlocale(LC_TIME, 'fr_FR.utf8', 'fra');
 
-require get_template_directory() . '/config/config.php';
+require get_stylesheet_directory() . '/config/config.php';
+require get_template_directory() . '/includes/class.network.php';
+//require get_template_directory() . '/admin/bot_update.php';
+//require get_template_directory() . '/admin/quest.php';
 
-require get_template_directory() . '/admin/bot_update.php';
-require get_template_directory() . '/admin/community.php';
 require get_template_directory() . '/admin/connector.php';
 require get_template_directory() . '/admin/gym.php';
 require get_template_directory() . '/admin/options.php';
-require get_template_directory() . '/admin/pokemon.php';
-require get_template_directory() . '/admin/quest.php';
 require get_template_directory() . '/admin/raid.php';
+require get_template_directory() . '/admin/community.php';  
+
+if( POGO_network::isMainSite() ) {
+    require get_template_directory() . '/admin/pokemon.php';    
+}
 
 require get_template_directory() . '/includes/class.acf.php';
 require get_template_directory() . '/includes/class.actions.php';
@@ -46,11 +50,14 @@ require get_template_directory() . '/includes/imageAnalizer/class.ia.pokemon_sea
 require get_template_directory() . '/includes/imageAnalizer/class.ia.microsoft_ocr.php';
 
 require get_template_directory() . '/api/class.api.php';
+require get_template_directory() . '/api/class.dijon-api.php';
 
 require get_template_directory() . '/includes/functions/setup.php';
 require get_template_directory() . '/includes/functions/enqueues.php';
 require get_template_directory() . '/includes/functions/navbar.php';
 
+require get_template_directory() . '/includes/import/helpers.php';
+ 
 
 add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 function custom_excerpt_length( $length ) {

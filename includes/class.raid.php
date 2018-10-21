@@ -22,6 +22,7 @@ class POGO_raid {
      * @return boolean|\POGO_raid
      */
     public static function create( $args, $source = false ) {
+        error_log( print_r($args['pokemon'], true) );
         if( !isset($args['gym']) || empty($args['gym']) ) return false;
         if( !isset($args['date']) || empty($args['date']) ) return false;
         $pokemon = ( !empty($args['pokemon']) ) ? new POGO_pokemon($args['pokemon']) : false ; 
@@ -36,6 +37,14 @@ class POGO_raid {
         if( !$pokemon && !$egglevel ) {
             return false;
         }
+        
+        error_log( print_r($pokemon, true) );
+        
+        if( $pokemon ) {
+            switch_to_blog( POGO_network::MAIN_BLOG_ID );
+            $egglevel = $pokemon->getRaidLevel();
+            restore_current_blog();
+        }
                
         $raid_id = wp_insert_post( array(
             'post_title'    => 'Raid '.$egglevel.' à l\'arêne '.get_the_title($gym_id),
@@ -47,7 +56,7 @@ class POGO_raid {
         update_field('raid_start_time', $args['date'], $raid_id );
         if( !empty($pokemon) ) {
             update_field('raid_boss', $pokemon->wpId, $raid_id );
-            update_field('raid_egglevel', $pokemon->getRaidLevel(), $raid_id );
+            update_field('raid_egglevel', $egglevel, $raid_id );
         } else {
             update_field('raid_egglevel', $egglevel, $raid_id );
         }
@@ -68,6 +77,11 @@ class POGO_raid {
         
         return $raid;
         
+    }
+    
+    public function delete() {
+        wp_trash_post( $this->wpId );
+        return true;
     }
     
     /**
@@ -156,7 +170,7 @@ class POGO_raid {
         if( empty($dbtime) ) return false;
         
         $end_time = new DateTime($dbtime); 
-        $end_time->modify( '+ 45 minutes' );
+        $end_time->modify( '+ '.POGO_config::get('activeRaidDuration').' minutes' );
         return $end_time;
     }
     

@@ -4,8 +4,8 @@ class POGO_api {
     
     function __construct() {
         $this->version = 1;
-        $this->private_token = 'AsdxZRqPkrst67utwHVM2w4rt4HjxGNcX8XVJDryMtffBFZk3VGM47HkvnF9';
-        $this->public_token = 'AsdxZRqPkrst67utwHVM2w4rt4HjxGNcX8XVJDryMtffBFZk3VGM47HkvnF9';
+        $this->private_token = POGO_config::get('AppApiPrivateKey');
+        $this->public_token = POGO_config::get('AppApiPublicKey');
         add_action( 'rest_api_init', array($this, 'registerRoutes') );
         add_filter( 'rest_url_prefix', array($this,'changeRestPrefix') );
     } 
@@ -78,11 +78,6 @@ class POGO_api {
                         return $this->isValidSourceCommunity($param);
                     }   
                 ),
-                'sourceChannel' => array(
-                    'validate_callback' => function($param, $request, $key) {
-                        return $this->isValidSourceChannel($param);
-                    }   
-                ),
                 'sourceUser' => array(),
             ),            
         ) ); 
@@ -104,6 +99,18 @@ class POGO_api {
                 ),
             ),            
         ) ); 
+        register_rest_route( $basename, '/raids/(?P<raidId>[0-9-]+)/delete', array(
+            'methods' => 'POST',
+            'callback' => array( $this, 'deleteRaid' ),
+            'args' => array(
+                'token' => array(
+                    'required' => true,
+                    'validate_callback' => function($param, $request, $key) {
+                        return $this->isRightToken($param);
+                    }
+                ),
+            ),            
+        ) );
         
         //Gyms
         register_rest_route( $basename, '/gyms/', array(
@@ -186,6 +193,13 @@ class POGO_api {
                 ),
             ),            
         ) );
+                
+        //Bot config
+        register_rest_route( $basename, '/login/', array(
+            'methods' => 'POST',
+            'callback' => array( $this, 'userLogin' ),           
+        ) );
+                
     }
     
     /**
@@ -195,7 +209,21 @@ class POGO_api {
      */
     
     function isRightToken( $token ) {
-        return ( $token == $this->public_token ) ? true : false ;
+        
+        //Si token général
+        if( $token == $this->private_token ) {
+            return true;
+        }
+        
+        //Si token d'un utilisateur
+        $user = POGO_query::getUserFromSecretKey($token);
+        if( $user ) {
+            update_field( 'last_visit', date('Y-m-d H:i:s'), 'user_'.$user->wpId );
+            return true;
+        }
+        
+        //Sinon
+        return false;
     }
     
     function isValidGym( $gymId ) {
@@ -203,7 +231,10 @@ class POGO_api {
     }
     
     function isValidPokemon( $pokemonId ) {
-        return ( get_post_type($pokemonId) == 'pokemon' ) ? true : false ;
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
+        $return = ( get_post_type($pokemonId) == 'pokemon' ) ? true : false ;
+        restore_current_blog();
+        return $return;
     }
     
     function isValidEggLevel( $egglevel ) {
@@ -222,18 +253,11 @@ class POGO_api {
     }
     
     function isValidSourceCommunity( $communityId ) {
-        $communities = POGO_helpers::getCommunities();
+        $communities = POGO_query::getCommunities();
         foreach( $communities as $community ) {
             if( $community->externalId == $communityId ) {
                 return true;
             }
-        }
-        return false;
-    }
-    
-    function isValidSourceChannel( $channelId ) {
-        if( is_numeric( $channelId ) ) {
-            return true;
         }
         return false;
     }
@@ -250,8 +274,7 @@ class POGO_api {
      */
     function getRaidBosses() {
         $result = array();
-        foreach( POGO_helpers::getRaidBosses() as $pokemon_id ) {
-            $pokemon = new POGO_pokemon($pokemon_id);
+        foreach( POGO_query::getRaidBosses() as $pokemon ) {
             $result[] = $this->preparePokemonForExport($pokemon);
         }
         return $result;
@@ -314,7 +337,6 @@ class POGO_api {
                 ); 
                 $raid_source = array(
                     'community' => $params['sourceCommunity'],
-                    'channel'   => $params['sourceChannel'],
                     'type'      => $params['sourceType'],
                     'user'      => $params['sourceUser'],
                     'content'   => $params['url'],
@@ -338,7 +360,6 @@ class POGO_api {
             ); 
             $raid_source = array(
                 'community' => $params['sourceCommunity'],
-                'channel'   => $params['sourceChannel'],
                 'type'      => $params['sourceType'],
                 'user'      => $params['sourceUser'],
                 'content'   => $params['sourceContent'],
@@ -352,6 +373,14 @@ class POGO_api {
                 'error' => 'Erreur inconnue',
             ) );               
         }
+        
+        //On checke l'utilisateur depuis le token privé
+        $user = POGO_query::getUserFromSecretKey($params['token']);
+        if( $user ) {
+            $raid_source['user'] = $user->getUsername();
+        }
+        
+        error_log( print_r($raid_source, true) );
         
         /**
          * ---------------------------------------------------------------------
@@ -411,12 +440,25 @@ class POGO_api {
             'user'        => $source_user,
             'type'        => 'map',
             'community'   => false,
-            'channel'     => false,
             'content'     => ''
         );
         
         $raid->updateRaid($pokemon_id, $source);
         return;
+    }
+    
+    public function deleteRaid( $request ) {
+        $params = $request->get_params();
+        $user = POGO_query::getUserFromSecretKey($params['token']);
+        if( !$user ) {
+            return false;
+        } 
+        if( !$user->isAdmin() ) {
+            return false;
+        }
+        $raid = new POGO_raid( $params['raidId'] ); 
+        $raid->delete();
+        return true;
     }
     
     /**
@@ -431,12 +473,12 @@ class POGO_api {
      */
     function getGyms( $request ) {
         $result = array();
-        foreach (POGO_helpers::getGyms() as $gym) {
-            $result[] = $this->prepareGymForExport($gym);
-        }
         
-        if( $request->get_param('userId') ) {
-            update_field( 'last_visit', date('Y-m-d H:i:s'), 'user_'.$request->get_param('userId') );
+        $gyms = POGO_query::getGyms();
+        if( $gyms ) {
+            foreach ($gyms as $gym) {
+                $result[] = $this->prepareGymForExport($gym);
+            }    
         }
         
         return $result;
@@ -461,17 +503,26 @@ class POGO_api {
     
     public function getCommunities() {
         $result = array();
-        foreach (POGO_helpers::getCommunities() as $community) {
-            $result[] = $this->prepareCommunityForExport($community);
+        foreach( get_sites() as $site ) {
+            switch_to_blog( $site->blog_id );           
+            foreach (POGO_query::getCommunities( $blog_id ) as $community) {
+                //if( $community->getType() != 'discord' ) continue;
+                $result[$community->externalId] = $this->prepareCommunityForExport($community);
+            }           
+            restore_current_blog();
         }
         return $result;        
     }
     
     public function getBotCommunities() {
         $result = array();
-        foreach (POGO_helpers::getCommunities() as $community) {
-            if( $community->getType() != 'discord' ) continue;
-            $result[$community->externalId] = $this->prepareDiscordCommunityForExport($community);
+        foreach( get_sites() as $site ) {
+            switch_to_blog( $site->blog_id );
+            foreach (POGO_query::getCommunities($blog_id) as $community) {
+                //if( $community->getType() != 'discord' ) continue;
+                $result[$community->externalId] = $this->prepareDiscordCommunityForExport($community);
+            }            
+            restore_current_blog();
         }
         return $result;             
     }
@@ -483,9 +534,14 @@ class POGO_api {
      */  
     public function getNews() {
         $result = array();
-        foreach (POGO_helpers::getNews() as $news) {
-            $result[] = $this->prepareNewsForExport( $news );        
+        
+        $news = POGO_helpers::getNews(); 
+        if( $news ) {
+            foreach ($news as $news) {
+                $result[] = $this->prepareNewsForExport( $news );        
+            }    
         }
+        
         return $result;
     }
         
@@ -543,6 +599,7 @@ class POGO_api {
             'id' => $gym->wpId,
             'nianticId' => $gym->nianticId,
             'nameFr' => $gym->getNameFr(),
+            'raidEx' => $gym->isRaidEx(),
             'name_alternatives' => $gym->getSearhPatterns(),
             'city' => $gym->getCity(),
             'GPSCoordinates' => $gym->getGPSCoordinates(),
@@ -558,12 +615,14 @@ class POGO_api {
             return false;
         }
         
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
+        
         $parent = false;
         if( $pokemon->getParent() ) {
             $parent = $this->preparePokemonForExport( $pokemon->getParent() );
         }
 
-        return array(
+        $return = array(
             'id' => $pokemon->wpId,
             'nianticId' => $pokemon->nianticId,
             'pokedexId' => $pokemon->pokedexId,
@@ -585,6 +644,10 @@ class POGO_api {
             'thumbnailUrl'  => $pokemon->getThumbnailUrl(),
             'parent'        => $parent,
         );
+        
+        restore_current_blog();
+        
+        return $return;
     }
     
     public function prepareCommunityForExport( $community ) {
@@ -592,14 +655,18 @@ class POGO_api {
         if (empty($community)) {
             return false;
         }
-
-        return array(
+        
+        switch_to_blog( POGO_network::MAIN_BLOG_ID );
+        $return = array(
             'id'            => $community->wpId,
             'externalId'    => $community->externalId,
             'type'          => $community->getType(),
             'nameFr'        => $community->getNameFr(),
             'url'           => $community->getUrl()
         );
+        restore_current_blog();
+        
+        return $return;
     }
     
     public function prepareNewsForExport( $news_obj ) {
@@ -609,7 +676,7 @@ class POGO_api {
             'publishDate'       => $news_obj->getPublishDate()->format('Y-m-d H:i:s'), 
             'contentCommunity'  => $news_obj->getContentForCommunity(),
             'contentMap'        => $news_obj->getContentForMap(),
-            'isImportant'       => $news_obj->isImportant(),
+            'isImportant'           => $news_obj->isImportant(),
         );
     }
     
@@ -625,9 +692,8 @@ class POGO_api {
                 'user'        => $raid->getLastAnnounce()->getAuthor(),
                 'type'        => $raid->getFirstAnnounce()->getType(),
                 'community'   => $this->prepareCommunityForExport( $raid->getFirstAnnounce()->getCommunity() ),
-                'channel'     => $raid->getFirstAnnounce()->getChannelId(),  
                 'content'     => '',
-                'url'         => $raid->getFirstAnnounce()->getsourceUrl(),  
+                'url'         => $raid->getFirstAnnounce()->getsourceUrl(),                
             );
         } 
         
@@ -673,15 +739,26 @@ class POGO_api {
             'raid' => 'raid'
         );
         
-        return array(
+        $return = array(
             'id'            => $community->wpId,
             'externalId'    => $community->externalId,
             'type'          => $community->getType(),
             'discordName'   => $community->getNameFr(),
             'active'        => true,
             'url'           => $community->getUrl(),
+            'server'        => home_url(),
             'params'        => $params,
             'commands'      => $commands,
+        );
+        
+        return $return;
+    }
+    
+    function userLogin() {
+        return array(
+            'status' => 'success',
+            'test'  => 'Test',
+            'coucou' => 'Coucou'
         );
     }
 

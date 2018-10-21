@@ -1,0 +1,615 @@
+{
+    "key": "group_5b42ff0cdff78",
+    "title": "Communauté",
+    "fields": [
+        {
+            "key": "field_5b7a8ea4e833d",
+            "label": "Infos de base",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_5b7a8e99e833c",
+            "label": "Nom",
+            "name": "community_name_fr",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b42ff44531f1",
+            "label": "ID",
+            "name": "community_discordid",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b42ff17531f0",
+            "label": "Type",
+            "name": "community_type",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "discord": "Discord",
+                "messenger": "Messenger"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5b7bb4e715667",
+            "label": "Détection des raids",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_5b7bb4f315668",
+            "label": "Activer la détection des Raids",
+            "name": "community_raid_detection",
+            "type": "true_false",
+            "instructions": "le Bot scannera tous les messages (texte et image) à la recherche d'annonce de raid",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5b7bb51915669",
+            "label": "Supprimer les messages analysés",
+            "name": "community_raid_detection_delete",
+            "type": "true_false",
+            "instructions": "Supprimer tous les messages dans lesquels le bot a trouvé une annonce de raid",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    },
+                    {
+                        "field": "field_5b7bb4f315668",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5b7a8f7d6ecb0",
+            "label": "Réglages",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_5b7a8f956ecb1",
+            "label": "Permettre de rejoindre la conversation",
+            "name": "community_conversation_join",
+            "type": "true_false",
+            "instructions": "Cela permettre à un utilisateur de la Map de rejoindre directement la conversation ayant annoncé un Raid.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5b9ab294e98a8",
+            "label": "Proposer de rejoindre un salon spécifique",
+            "name": "community_conversation_join_default_channel",
+            "type": "true_false",
+            "instructions": "Cela permet de faire systématiquement un lien vers un salon en particulier. Sinon, le lien proposé renverra vers le salon où a été faite l'annonce",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5b7536ec59765",
+            "label": "ID du salon de raids par défaut",
+            "name": "community_default_raids_channel_id",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    },
+                    {
+                        "field": "field_5b7a8f956ecb1",
+                        "operator": "==",
+                        "value": "1"
+                    },
+                    {
+                        "field": "field_5b9ab294e98a8",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b7bb21ef7492",
+            "label": "News",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_5b7bb230f7493",
+            "label": "Afficher les news de Niantic (fr)",
+            "name": "community_news_niantic",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5b7bb27ff7494",
+            "label": "Nom du salon pour les news de Niantic",
+            "name": "community_news_niantic_channel_name",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    },
+                    {
+                        "field": "field_5b7bb230f7493",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b7bb2f0a7cdc",
+            "label": "Afficher les news de la SilphRoad (en)",
+            "name": "community_news_silphroad",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5b7bb317a7cde",
+            "label": "Nom du salon pour les news de SilphRoad",
+            "name": "community_news_silphroad_channel_name",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    },
+                    {
+                        "field": "field_5b7bb2f0a7cdc",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b7bb303a7cdd",
+            "label": "Afficher les news de GoHub (en)",
+            "name": "community_news_gohub",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5b7bb335a7cdf",
+            "label": "Nom du salon pour les news de GOHub",
+            "name": "community_news_gohub_channel_name",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    },
+                    {
+                        "field": "field_5b7bb303a7cdd",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b7bb3876966a",
+            "label": "Message de bienvenue",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_5b7bb3956966b",
+            "label": "Activer le message de bienvenue",
+            "name": "community_welcome",
+            "type": "true_false",
+            "instructions": "Ce message apparaîtra à chaque fois qu'un membre rejoindra votre serveur",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5b7bb3c36966c",
+            "label": "Message de bienvenue",
+            "name": "community_welcome_message",
+            "type": "textarea",
+            "instructions": "Indiquez {member} pour citer le nouveau venu, par ex \"Bienvenue sur notre serveur {member}\"",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    },
+                    {
+                        "field": "field_5b7bb3956966b",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_5b7c6b3e29266",
+            "label": "Channel du message de bienvenue",
+            "name": "community_welcome_channel",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b42ff17531f0",
+                        "operator": "==",
+                        "value": "discord"
+                    },
+                    {
+                        "field": "field_5b7bb3956966b",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b7a8ecae833e",
+            "label": "Fin",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "community"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1539667992
+}

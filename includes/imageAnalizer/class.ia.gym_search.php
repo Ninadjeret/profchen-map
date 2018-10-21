@@ -8,7 +8,7 @@ class POGO_IA_gymSearch {
     function __construct() {
         $this->debug = false;
         $this->query = false;
-        $this->gyms = POGO_helpers::getGyms();
+        $this->gyms = POGO_query::getGyms();
         $this->sanitizedNames = $this->getSanitizedNames();
     }
     

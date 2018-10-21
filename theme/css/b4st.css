@@ -194,8 +194,7 @@ body, html {
     min-height: 50px;
     border-top: 1px solid #eee;
 }
-.main-menu .item {
-    padding: 10px 20px 5px 20px;
+.main-menu .item {   
     text-align:center;
     width: 33.3333333%;
     color: #77babf;
@@ -204,10 +203,14 @@ body, html {
     width: 25%;
 }
 .main-menu .item a {
+    display: block;
+    padding: 10px 20px 5px 20px;
     color: rgba(25,135,150,0.4);
 }
-.main-menu .item a:hover {
+.main-menu .item a:hover,
+.main-menu .item a:active {
     text-decoration:none;
+    background: #fafafa;
 }
 .main-menu .item i {
     display: block;
@@ -340,6 +343,7 @@ main.mdl-layout__content {
     color: #1c8796;
     text-align: center;
     font-family: 'Teko';
+    padding: 30px 24px 0;
 }
 .mdl-dialog.gym-dialog .mdl-dialog__city {
     padding: 0 24px;
@@ -738,16 +742,22 @@ main.mdl-layout__content {
 }
 
 .section__title,
-.acf-accordion-title {
+.acf-accordion-title,
+.acf-field-accordion {
     background: #fafafa;
-    padding: 10px 15px;
+    padding: 10px 15px !important;
     font-family: 'Teko';
     font-size: 20px;
 }
-.acf-accordion .acf-accordion-title label {
+.acf-accordion .acf-accordion-title label,
+.acf-field-accordion label {
     font-size: 20px;
     font-weight: normal;    
     line-height: 1;
+}
+.acf-field-accordion .acf-label,
+.acf-field-accordion .acf-label label {
+    margin: 0;
 }
 .acf-field .acf-label label {
     font-weight: initial;
@@ -1036,6 +1046,9 @@ main.mdl-layout__content {
 .setting-link.main-color {
     color: #ca3366;
 }
+.modal__screen {
+    position: relative;
+}
 .modal__screen .step {
     margin: 0 24px;
     text-align: center;
@@ -1093,5 +1106,45 @@ main.mdl-layout__content {
     width: 33.33333%;
     border-bottom: 1px solid #fafafa;
 }
+.modal__screen[data-screen="gym"] .gym__ex {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: #5bb0c4;
+    padding: 0px 5px;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 9px;
+    text-transform: uppercase;
+    display:none;
+}
+.mdl-dialog__wrap.raidex .modal__screen[data-screen="gym"] .gym__ex  {
+    display: block
+}
+
+#mapid { 
+    position: absolute;
+    bottom: 0;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+    right: 0; 
+    z-index: 0;
+}
+.map-marker__label {
+    top: 32px;
+    width: 49px;
+    text-align:center;
+    color: #fff;
+    position: absolute;
+}
+.map-marker__img.raid {
+    max-width: 49px !important;
+    width: 49px !important;
+}
+.leaflet-control-zoom {
+    display: none !important;
+}
+
 
 

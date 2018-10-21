@@ -1,0 +1,342 @@
+{
+    "key": "group_5ad82785978b3",
+    "title": "Pokemon",
+    "fields": [
+        {
+            "key": "field_5ad827f152eb3",
+            "label": "Identification",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5ad827fa52eb4",
+            "label": "ID Niantic",
+            "name": "id_niantic",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ad8280352eb5",
+            "label": "ID Pokedex",
+            "name": "id_pokedex",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5b801557ee6e3",
+            "label": "ID variante",
+            "name": "id_form",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ad889a7576bd",
+            "label": "Evolution",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5ad88a0bde092",
+            "label": "Cout bonbon",
+            "name": "candy_cost",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5ad8279460a3b",
+            "label": "Stats",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5ad827bf60a3d",
+            "label": "Base Atk",
+            "name": "base_atk",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5ad827cc60a3e",
+            "label": "Base Def",
+            "name": "base_def",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5ad827a360a3c",
+            "label": "Base Stam",
+            "name": "base_stam",
+            "type": "number",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5ad8b3b253b27",
+            "label": "Data",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5ad8b3bb53b28",
+            "label": "Shiny",
+            "name": "shiny",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Shiny",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "Disponible",
+            "ui_off_text": "Non disponible"
+        },
+        {
+            "key": "field_5ad8b9584a0b9",
+            "label": "Boss de raid",
+            "name": "raidboss",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "Boss de raid",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "Disponible",
+            "ui_off_text": "Non disponible"
+        },
+        {
+            "key": "field_5ad8b96f4a0ba",
+            "label": "Niveau de boss",
+            "name": "raidboss_egg",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5ad8b9584a0b9",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1": "1",
+                "2": "2",
+                "3": "3",
+                "4": "4",
+                "5": "5"
+            },
+            "allow_null": 0,
+            "other_choice": 0,
+            "save_other_choice": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5b02d6cd5618e",
+            "label": "Patterns de recherche",
+            "name": "search_patterns",
+            "type": "repeater",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "collapsed": "",
+            "min": 0,
+            "max": 0,
+            "layout": "table",
+            "button_label": "Ajouter un pattern",
+            "sub_fields": [
+                {
+                    "key": "field_5b02d6fc5618f",
+                    "label": "Pattern",
+                    "name": "pattern",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "pokemon"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1539668000
+}

@@ -1,0 +1,513 @@
+{
+    "key": "group_5afd1b6c26ad9",
+    "title": "Connecteur",
+    "fields": [
+        {
+            "key": "field_5b67f35e4dfc1",
+            "label": "Info",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_5b7d040532508",
+            "label": "Nom",
+            "name": "name_fr",
+            "type": "text",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5afd1cd639362",
+            "label": "Url",
+            "name": "url",
+            "type": "url",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5b4327bf96e9d",
+            "label": "Communauté",
+            "name": "connector_community",
+            "type": "post_object",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "community"
+            ],
+            "taxonomy": "",
+            "allow_null": 1,
+            "multiple": 0,
+            "return_format": "id",
+            "ui": 1,
+            "choices": {
+                "1794": "Discord du Prof Chen",
+                "1762": "Messenger de Chartres",
+                "1384": "Discord de Chartres",
+                "1379": "Discord de Vern"
+            }
+        },
+        {
+            "key": "field_5b67f3884dfc4",
+            "label": "Afficher la source",
+            "name": "connector_display_source",
+            "type": "true_false",
+            "instructions": "Permet d'afficher à la fin de chaque annonce depuis quelle communauté l'annonce a été récupérée",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5b67f3744dfc2",
+            "label": "Critères SuperAdmin",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_5afd1c2489fb9",
+            "label": "Type de raid",
+            "name": "connector_raidstep",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "future": "Avant éclosion",
+                "publish": "Après éclosion"
+            },
+            "allow_custom": 0,
+            "save_custom": 0,
+            "default_value": [],
+            "layout": "horizontal",
+            "toggle": 0,
+            "return_format": "value"
+        },
+        {
+            "key": "field_5b6970cfb3700",
+            "label": "Source",
+            "name": "connector_source_type",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "text": "Texte",
+                "img": "Image",
+                "auto": "Automatique",
+                "map": "Map"
+            },
+            "allow_custom": 0,
+            "save_custom": 0,
+            "default_value": [],
+            "layout": "horizontal",
+            "toggle": 0,
+            "return_format": "value"
+        },
+        {
+            "key": "field_5b7baf833e1bd",
+            "label": "Arènes",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_5b7baff57b87f",
+            "label": "Filtrer les arènes",
+            "name": "connector_filter_gyms",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "none": "Aucun filtre",
+                "city": "Par ville",
+                "gym": "Par arène"
+            },
+            "allow_null": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5b7c700692d9c",
+            "label": "Villes",
+            "name": "connector_cities",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b7baff57b87f",
+                        "operator": "==",
+                        "value": "city"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Beaulieu": "Beaulieu",
+                "Bourgbarré": "Bourgbarré",
+                "Bruz": "Bruz",
+                "Cesson": "Cesson",
+                "Chartres": "Chartres",
+                "Nouvoitou": "Nouvoitou",
+                "Noyal": "Noyal",
+                "Orgères": "Orgères",
+                "Pont-Péan": "Pont-Péan",
+                "Rennes Sud": "Rennes Sud",
+                "Saint-Erblon": "Saint-Erblon",
+                "Saint-Armel": "Saint-Armel",
+                "Vern": "Vern"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 1,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5afd1b9c89fb7",
+            "label": "Arènes",
+            "name": "connector_gyms",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b7baff57b87f",
+                        "operator": "==",
+                        "value": "gym"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Beaulieu": [],
+                "Bourgbarré": {
+                    "1025": "Croix du chemin",
+                    "991": "Croix du presbytère",
+                    "1027": "Edf",
+                    "994": "Eglise Sainte Trinité"
+                },
+                "Bruz": {
+                    "1362": "Aux enfants de Bruz",
+                    "1366": "Clocher du jardin",
+                    "1733": "La Bombe",
+                    "1364": "La Poste",
+                    "1348": "Pyramide de verre"
+                },
+                "Cesson": {
+                    "1244": "Chateau de la Monniais"
+                },
+                "Chartres": {
+                    "1333": "Aire de jeux",
+                    "1338": "Deco Bio",
+                    "1342": "Parc Jeux Enfants",
+                    "1340": "Pôle Sud",
+                    "1332": "Space Box",
+                    "1336": "Tombeau de Le Vicontesse de Janzé"
+                },
+                "Nouvoitou": [],
+                "Noyal": {
+                    "1552": "Brin d’herbe",
+                    "1548": "Calvaire",
+                    "1555": "Église Saint Leonard",
+                    "1558": "Fresque Azimuzik",
+                    "1546": "Les Guerriers Celtes"
+                },
+                "Orgères": {
+                    "1373": "Château d’eau",
+                    "1371": "Eglise",
+                    "1368": "Terrains de Tennis"
+                },
+                "Pont-Péan": {
+                    "1346": "Bâtiment administratif de l’ancienne mine",
+                    "1344": "Monument aux morts"
+                },
+                "Rennes Sud": [],
+                "Saint-Erblon": {
+                    "1561": "Église",
+                    "1565": "Puit",
+                    "1567": "St Erblon : Honneur à Nos Enfants"
+                },
+                "Saint-Armel": [],
+                "Vern": {
+                    "859": "Clos d’Orrière",
+                    "1829": "Échelle de vie",
+                    "857": "Eglise",
+                    "863": "Gare",
+                    "861": "Le Volume"
+                }
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5b7baf9a3e1be",
+            "label": "Boss",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 1,
+            "multi_expand": 1,
+            "endpoint": 0
+        },
+        {
+            "key": "field_5b7c717ff10cb",
+            "label": "Filtrer les Pokemon",
+            "name": "connector_filter_pokemon",
+            "type": "button_group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "none": "Aucun filtre",
+                "level": "Par niveau",
+                "pokemon": "Par Pokemon"
+            },
+            "allow_null": 0,
+            "default_value": "",
+            "layout": "horizontal",
+            "return_format": "value"
+        },
+        {
+            "key": "field_5afd1bbb89fb8",
+            "label": "Niveau de boss",
+            "name": "connector_egglevels",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b7c717ff10cb",
+                        "operator": "==",
+                        "value": "level"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1": "1 tête",
+                "2": "2 têtes",
+                "3": "3 têtes",
+                "4": "4 têtes",
+                "5": "5 têtes"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 1,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5afd1b7089fb6",
+            "label": "Pokémon",
+            "name": "connector_pokemon",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5b7c717ff10cb",
+                        "operator": "==",
+                        "value": "pokemon"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "1 têtes": {
+                    "149": "Magicarpe",
+                    "316": "Makuhita",
+                    "327": "Meditikka",
+                    "340": "Wailmer"
+                },
+                "2 têtes": {
+                    "123": "Noadkoko",
+                    "301": "Kirlia",
+                    "323": "Mysdibule",
+                    "335": "Roselia"
+                },
+                "3 têtes": {
+                    "46": "Raichu",
+                    "88": "Mackogneur",
+                    "134": "Saquedeneu",
+                    "241": "Cochignon",
+                    "252": "Donphan"
+                },
+                "4 têtes": {
+                    "125": "Ossatueur",
+                    "132": "Rhinoféros",
+                    "268": "Tyranocif",
+                    "380": "Absol"
+                },
+                "5 têtes": {
+                    "398": "Regirock"
+                }
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5b67f37f4dfc3",
+            "label": "Affichage",
+            "name": "",
+            "type": "accordion",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "open": 0,
+            "multi_expand": 0,
+            "endpoint": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "connector"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1540010059
+}

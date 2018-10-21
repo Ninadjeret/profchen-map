@@ -1,0 +1,159 @@
+{
+    "key": "group_5b3707d2525ad",
+    "title": "Boss de raid",
+    "fields": [
+        {
+            "key": "field_5b3707e6d89b3",
+            "label": "Boss 1 tête",
+            "name": "boss_1t",
+            "type": "relationship",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "pokemon"
+            ],
+            "taxonomy": [],
+            "filters": [
+                "search"
+            ],
+            "elements": [
+                "featured_image"
+            ],
+            "min": "",
+            "max": "",
+            "return_format": "id"
+        },
+        {
+            "key": "field_5b370807d89b4",
+            "label": "Boss 2 têtes",
+            "name": "boss_2t",
+            "type": "relationship",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "pokemon"
+            ],
+            "taxonomy": [],
+            "filters": [
+                "search"
+            ],
+            "elements": [
+                "featured_image"
+            ],
+            "min": "",
+            "max": "",
+            "return_format": "id"
+        },
+        {
+            "key": "field_5b370812d89b5",
+            "label": "Boss 3 têtes",
+            "name": "boss_3t",
+            "type": "relationship",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "pokemon"
+            ],
+            "taxonomy": [],
+            "filters": [
+                "search"
+            ],
+            "elements": [
+                "featured_image"
+            ],
+            "min": "",
+            "max": "",
+            "return_format": "id"
+        },
+        {
+            "key": "field_5b37081bd89b6",
+            "label": "Boss 4 têtes",
+            "name": "boss_4t",
+            "type": "relationship",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "pokemon"
+            ],
+            "taxonomy": [],
+            "filters": [
+                "search"
+            ],
+            "elements": [
+                "featured_image"
+            ],
+            "min": "",
+            "max": "",
+            "return_format": "id"
+        },
+        {
+            "key": "field_5b370825d89b7",
+            "label": "Boss 5 têtes",
+            "name": "boss_5t",
+            "type": "relationship",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "pokemon"
+            ],
+            "taxonomy": [],
+            "filters": [
+                "search"
+            ],
+            "elements": [
+                "featured_image"
+            ],
+            "min": "",
+            "max": "",
+            "return_format": "id"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-boss-de-raid"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1539667986
+}
