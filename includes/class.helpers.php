@@ -592,7 +592,8 @@ public static function deleteAccents($string) {
             'type'        => 'auto',
             'community'   => false,
             'channel'     => false,
-            'content'     => 'Mise à jour automatique'
+            'content'     => 'Mise à jour automatique',
+            'url'         => false
         );
     }
     
@@ -602,7 +603,8 @@ public static function deleteAccents($string) {
             'type'        => 'map',
             'community'   => false,
             'channel'     => false,
-            'content'     => 'Annoncé depuis la map'
+            'content'     => 'Annoncé depuis la map',
+            'url'         => false
         );
     }
     

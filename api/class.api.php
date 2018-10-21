@@ -692,7 +692,8 @@ class POGO_api {
                 'user'        => $raid->getLastAnnounce()->getAuthor(),
                 'type'        => $raid->getFirstAnnounce()->getType(),
                 'community'   => $this->prepareCommunityForExport( $raid->getFirstAnnounce()->getCommunity() ),
-                'content'     => ''                
+                'content'     => '',
+                'url'         => $raid->getFirstAnnounce()->getsourceUrl(),                
             );
         } 
         
